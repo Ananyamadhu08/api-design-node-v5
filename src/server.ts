@@ -3,10 +3,12 @@ import authRoutes from './routes/authRoutes.ts'
 import userRoutes from './routes/userRoutes.ts'
 import habitRoutes from './routes/habitRoutes.ts'
 import helmet from 'helmet'
+import cors from 'cors'
 
 const app = express()
 
 app.use(helmet())
+app.use(cors())
 
 app.get('/health', (req, res) => {
   res.status(200).json({
