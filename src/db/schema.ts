@@ -51,3 +51,14 @@ export const tags = pgTable('tags', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
+
+export const habitTags = pgTable('habitTags', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  habitId: uuid('habit_id')
+    .references(() => habits.id, { onDelete: 'cascade' })
+    .notNull(),
+  tagId: uuid('tag_id')
+    .references(() => tags.id, { onDelete: 'cascade' })
+    .notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+})
