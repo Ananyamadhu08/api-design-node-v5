@@ -66,3 +66,12 @@ export const habitTags = pgTable('habitTags', {
 export const userRelations = relations(users, ({ many }) => ({
   habits: many(habits),
 }))
+
+export const habitsRelations = relations(habits, ({ one, many }) => ({
+  user: one(users, {
+    fields: [habits.userId],
+    references: [users.id],
+  }),
+  entries: many(entries),
+  tags: many(habitTags),
+}))
