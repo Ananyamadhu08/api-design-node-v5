@@ -62,3 +62,7 @@ export const habitTags = pgTable('habitTags', {
     .notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
+
+export const userRelations = relations(users, ({ many }) => ({
+  habits: many(habits),
+}))
