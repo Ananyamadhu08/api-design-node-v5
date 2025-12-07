@@ -73,3 +73,44 @@ export const getUserHabits = async (
     res.status(500).json({ error: 'Failed to fetch habits' })
   }
 }
+
+export const updateHabit = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const id = req.params.id
+    const { tagIds, ...updates } = req.body
+    const result = await db.transaction(async (tx) => {
+      const [updatedHabit] = await tx
+        .update(habits)
+        .set({ ...updates, updateAt: new Date() })
+        .where(and(eq(habits.id, id), eq(habits.userId, req.user.id)))
+        .returning()
+
+      if (!updateHabit) {
+        return res.status(401).end()
+      }
+
+      if (tagIds !== undefined) {
+        await tx.delete(habitTags).where(eq(habitTags.habitId, id))
+
+        if (tagIds.length > 0) {
+          const habitTagValues = tagIds.map((tagId) => ({
+            habitId: id,
+            tagId,
+          }))
+
+          await tx.insert(habitTags).values(habitTagValues)
+        }
+      }
+
+      return updatedHabit
+    })
+
+    res.json({
+      message: 'Habit was updated',
+      habit: result,
+    })
+  } catch (e) {
+    console.error('Update habit error', e)
+    res.status(500).json({ error: 'Failed to update habit' })
+  }
+}
