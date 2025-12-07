@@ -47,6 +47,7 @@ export const register = async (
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body
+
     const user = await db.query.users.findFirst({
       where: eq(users.email, email),
     })
