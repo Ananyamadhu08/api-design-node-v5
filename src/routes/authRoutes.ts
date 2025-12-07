@@ -13,6 +13,6 @@ const router = Router()
 
 router.post('/register', validateBody(insertUserSchema), register)
 
-router.post('/login', login)
+router.post('/login', validateBody(loginSchema), login)
 
 export default router
