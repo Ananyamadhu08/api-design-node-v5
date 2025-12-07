@@ -82,7 +82,7 @@ export const login = async (req: Request, res: Response) => {
       })
       .status(201)
   } catch (e) {
-    console.error('Error logging in', e)
+    console.error('Logging in error', e)
     res.status(500).json({ error: 'Failed to login' })
   }
 }
