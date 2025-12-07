@@ -1,6 +1,15 @@
 import { Router } from 'express'
 import { authenticateToken } from '../middleware/auth.ts'
 import { createHabit } from '../controllers/habitController.ts'
+import { z } from 'zod'
+
+const createHabitSchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  frequency: z.string(),
+  targetCount: z.number(),
+  tagIds: z.array(z.string()).optional(),
+})
 
 const router = Router()
 
