@@ -113,4 +113,19 @@ describe('Habits API', () => {
       expect(response.status).toBe(404)
     })
   })
+
+  describe('POST /api/habits/:id/complete', () => {
+    it('should mark habit as completed', async () => {
+      const { user, token } = await createTestUser()
+      const habit = await createTestHabit(user.id)
+
+      const response = await request(app)
+        .post(`/api/habits/${habit.id}/complete`)
+        .send({})
+        .set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(201)
+      expect(response.body.entry).toBeDefined()
+    })
+  })
 })
