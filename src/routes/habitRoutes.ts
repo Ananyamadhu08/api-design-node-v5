@@ -17,6 +17,10 @@ const createHabitSchema = z.object({
   tagIds: z.array(z.string()).optional(),
 })
 
+const uuidSchema = z.object({
+  id: z.uuid('Invalid habit ID format'),
+})
+
 const router = Router()
 
 router.use(authenticateToken)
