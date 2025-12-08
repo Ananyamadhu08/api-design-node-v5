@@ -38,3 +38,31 @@ export async function createTestUser(
 
   return { user, token, rawPassword: defaultData.password }
 }
+
+export async function createTestHabit(
+  userId: string,
+  habitData: Partial<{
+    name: string
+    description: string
+    frequency: string
+    targetCount: number
+  }> = {}
+) {
+  const defaultData = {
+    name: `Test Habit ${Date.now()}`,
+    description: 'A test habit',
+    frequency: 'daily',
+    targetCount: 1,
+    ...habitData,
+  }
+
+  const [habit] = await db
+    .insert(habits)
+    .values({
+      userId,
+      ...defaultData,
+    })
+    .returning()
+
+  return habit
+}
