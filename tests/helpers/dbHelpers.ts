@@ -1,5 +1,11 @@
 import { db } from '../../src/db/connection.ts'
-import { users, habits, entries, type NewUser } from '../../src/db/schema.ts'
+import {
+  users,
+  habits,
+  entries,
+  type NewUser,
+  type NewHabit,
+} from '../../src/db/schema.ts'
 import { hashPassword } from '../../src/utils/password.ts'
 import { generateToken } from '../../src/utils/jwt.ts'
 
@@ -34,12 +40,7 @@ export async function createTestUser(userData: Partial<NewUser> = {}) {
 
 export async function createTestHabit(
   userId: string,
-  habitData: Partial<{
-    name: string
-    description: string
-    frequency: string
-    targetCount: number
-  }> = {}
+  habitData: Partial<NewHabit> = {}
 ) {
   const defaultData = {
     name: `Test Habit ${Date.now()}`,
