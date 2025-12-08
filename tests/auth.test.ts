@@ -46,5 +46,20 @@ describe('Authentication Endpoints', () => {
 
       expect(response.body).toHaveProperty('error', 'Validation failed')
     })
+
+    it('should return 400 for short password', async () => {
+      const userData = {
+        email: `test-${Date.now()}@example.com`,
+        username: `testuser-${Date.now()}`,
+        password: 'short',
+      }
+
+      const response = await request(app)
+        .post('/api/auth/register')
+        .send(userData)
+        .expect(400)
+
+      expect(response.body).toHaveProperty('error', 'Validation failed')
+    })
   })
 })
