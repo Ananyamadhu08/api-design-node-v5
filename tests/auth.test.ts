@@ -8,6 +8,7 @@ describe('Authentication Endpoints', () => {
   afterEach(async () => {
     await cleanupDatabase()
   })
+
   describe('POST /api/auth/register', () => {
     it('should register a new user with valid data', async () => {
       const userData = {
