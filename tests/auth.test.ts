@@ -62,4 +62,29 @@ describe('Authentication Endpoints', () => {
       expect(response.body).toHaveProperty('error', 'Validation failed')
     })
   })
+
+  describe('POST /api/auth/login', () => {
+    it('should login with valid credentials', async () => {
+      // Create a test user first
+      const { user, rawPassword } = await createTestUser({
+        email: `test-${Date.now()}@example.com`,
+        password: 'TestPassword123!',
+      })
+
+      const credentials = {
+        email: user.email,
+        password: rawPassword,
+      }
+
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send(credentials)
+        .expect(200)
+
+      expect(response.body).toHaveProperty('message', 'Login successful')
+      expect(response.body).toHaveProperty('user')
+      expect(response.body).toHaveProperty('token')
+      expect(response.body.user).not.toHaveProperty('password')
+    })
+  })
 })
