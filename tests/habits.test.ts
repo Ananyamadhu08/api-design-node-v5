@@ -39,5 +39,19 @@ describe('Habits API', () => {
 
       expect(response.status).toBe(401)
     })
+
+    it('should validate input data', async () => {
+      const { token } = await createTestUser()
+
+      const response = await request(app)
+        .post('/api/habits')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: '',
+          frequency: 'invalid',
+        })
+
+      expect(response.status).toBe(400)
+    })
   })
 })
