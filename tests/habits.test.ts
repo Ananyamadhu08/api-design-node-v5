@@ -54,4 +54,19 @@ describe('Habits API', () => {
       expect(response.status).toBe(400)
     })
   })
+
+  describe('GET /api/habits', () => {
+    it('should get all user habits', async () => {
+      const { user, token } = await createTestUser()
+      await createTestHabit(user.id)
+
+      const response = await request(app)
+        .get('/api/habits')
+        .set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(200)
+      expect(Array.isArray(response.body.habits)).toBe(true)
+      expect(response.body.habits.length).toBeGreaterThan(0)
+    })
+  })
 })
