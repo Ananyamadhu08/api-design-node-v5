@@ -74,7 +74,7 @@ export const habitsRelations = relations(habits, ({ one, many }) => ({
     references: [users.id],
   }),
   entries: many(entries),
-  tags: many(habitTags),
+  habitTags: many(habitTags),
 }))
 
 export const entriesRelations = relations(entries, ({ one }) => ({
