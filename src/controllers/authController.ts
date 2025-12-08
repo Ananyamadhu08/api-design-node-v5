@@ -70,7 +70,7 @@ export const login = async (req: Request, res: Response) => {
 
     return res
       .json({
-        message: 'Login success',
+        message: 'Login successful',
         user: {
           id: user.id,
           email: user.email,
