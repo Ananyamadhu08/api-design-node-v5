@@ -30,5 +30,14 @@ describe('Habits API', () => {
       expect(response.body.habit).toBeDefined()
       expect(response.body.habit.name).toBe('Exercise daily')
     })
+
+    it('should require authentication', async () => {
+      const response = await request(app).post('/api/habits').send({
+        name: 'Exercise',
+        frequency: 'daily',
+      })
+
+      expect(response.status).toBe(401)
+    })
   })
 })
