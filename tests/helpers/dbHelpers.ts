@@ -66,3 +66,10 @@ export async function createTestHabit(
 
   return habit
 }
+
+export async function cleanupDatabase() {
+  // Clean up in the right order due to foreign key constraints
+  await db.delete(entries)
+  await db.delete(habits)
+  await db.delete(users)
+}
