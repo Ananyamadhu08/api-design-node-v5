@@ -86,5 +86,18 @@ describe('Authentication Endpoints', () => {
       expect(response.body).toHaveProperty('token')
       expect(response.body.user).not.toHaveProperty('password')
     })
+
+    it('should return 400 for missing email', async () => {
+      const credentials = {
+        password: 'TestPassword123!',
+      }
+
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send(credentials)
+        .expect(400)
+
+      expect(response.body).toHaveProperty('error', 'Validation failed')
+    })
   })
 })
