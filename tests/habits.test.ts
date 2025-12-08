@@ -147,4 +147,21 @@ describe('Habits API', () => {
       expect(response.status).toBe(400)
     })
   })
+
+  describe('DELETE /api/habits/:id', () => {
+    it('should delete a habit', async () => {
+      const { user, token } = await createTestUser()
+      const habit = await createTestHabit(user.id, {
+        name: 'Temporary habit',
+        description: 'To be deleted',
+      })
+
+      const response = await request(app)
+        .delete(`/api/habits/${habit.id}`)
+        .set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(200)
+      expect(response.body.message).toBe('Habit deleted successfully')
+    })
+  })
 })
