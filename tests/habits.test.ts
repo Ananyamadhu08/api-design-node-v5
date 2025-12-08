@@ -127,5 +127,24 @@ describe('Habits API', () => {
       expect(response.status).toBe(201)
       expect(response.body.entry).toBeDefined()
     })
+
+    it('should prevent duplicate completion on same day', async () => {
+      const { user, token } = await createTestUser()
+      const habit = await createTestHabit(user.id)
+
+      // Complete habit first time
+      await request(app)
+        .post(`/api/habits/${habit.id}/complete`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({})
+        .expect(201)
+
+      // Try to complete again
+      const response = await request(app)
+        .post(`/api/habits/${habit.id}/complete`)
+        .set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(400)
+    })
   })
 })
