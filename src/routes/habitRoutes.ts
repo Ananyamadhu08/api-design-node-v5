@@ -35,7 +35,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', validateBody(createHabitSchema), createHabit)
 
-router.delete('/:id', deleteHabit)
+router.delete('/:id', validateParams(uuidSchema), deleteHabit)
 
 router.post('/:id/complete', (req, res) => {
   res.status(201).json({ message: 'completed habit' })
