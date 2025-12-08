@@ -134,8 +134,8 @@ export const deleteHabit = async (req: AuthenticatedRequest, res: Response) => {
     res.json({
       message: 'Habit deleted successfully',
     })
-  } catch (error) {
-    console.error('Delete habit error:', error)
+  } catch (e) {
+    console.error('Delete habit error:', e)
     res.status(500).json({ error: 'Failed to delete habit' })
   }
 }
