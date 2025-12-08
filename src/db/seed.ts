@@ -16,11 +16,11 @@ const seed = async () => {
     const [demoUser] = await db
       .insert(users)
       .values({
-        email: 'demo@app.com',
+        email: 'john@app.com',
         password: 'password',
-        firstName: 'demo',
-        lastName: 'person',
-        username: 'demo',
+        firstName: 'John',
+        lastName: 'Doe',
+        username: 'john123',
       })
       .returning()
 
