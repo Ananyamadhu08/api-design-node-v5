@@ -18,6 +18,10 @@ router.use(authenticateToken)
 
 router.get('/', getUserHabits)
 
+router.patch('/:id', (req, res) => {
+  res.status(200).json({ message: 'updated habit' })
+})
+
 router.get('/:id', (req, res) => {
   res.status(200).json({ message: 'got one habit' })
 })
