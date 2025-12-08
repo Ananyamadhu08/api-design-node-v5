@@ -78,7 +78,9 @@ export const getUserHabits = async (
 export const updateHabit = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const id = req.params.id
+
     const { tagIds, ...updates } = req.body
+
     const result = await db.transaction(async (tx) => {
       const [updatedHabit] = await tx
         .update(habits)
