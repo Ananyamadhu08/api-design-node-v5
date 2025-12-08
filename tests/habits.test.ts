@@ -163,5 +163,16 @@ describe('Habits API', () => {
       expect(response.status).toBe(200)
       expect(response.body.message).toBe('Habit deleted successfully')
     })
+
+    it('should return 404 for non-existent habit', async () => {
+      const { token } = await createTestUser()
+      const fakeId = '00000000-0000-0000-0000-000000000000'
+
+      const response = await request(app)
+        .delete(`/api/habits/${fakeId}`)
+        .set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(404)
+    })
   })
 })
