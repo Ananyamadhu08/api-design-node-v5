@@ -14,6 +14,7 @@ export async function createTestUser(userData: Partial<NewUser> = {}) {
   }
 
   const hashedPassword = await hashPassword(defaultData.password)
+
   const [user] = await db
     .insert(users)
     .values({
