@@ -68,5 +68,17 @@ describe('Habits API', () => {
       expect(Array.isArray(response.body.habits)).toBe(true)
       expect(response.body.habits.length).toBeGreaterThan(0)
     })
+
+    it('should return empty array for user with no habits', async () => {
+      const { token } = await createTestUser()
+
+      const response = await request(app)
+        .get('/api/habits')
+        .set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(200)
+      expect(Array.isArray(response.body.habits)).toBe(true)
+      expect(response.body.habits.length).toBe(0)
+    })
   })
 })
