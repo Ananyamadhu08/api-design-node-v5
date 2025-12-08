@@ -99,5 +99,22 @@ describe('Authentication Endpoints', () => {
 
       expect(response.body).toHaveProperty('error', 'Validation failed')
     })
+
+    it('should return 401 for invalid credentials', async () => {
+      // Create a test user first
+      const { user } = await createTestUser()
+
+      const credentials = {
+        email: user.email,
+        password: 'wrongpassword',
+      }
+
+      const response = await request(app)
+        .post('/api/auth/login')
+        .send(credentials)
+        .expect(401)
+
+      expect(response.body).toHaveProperty('error')
+    })
   })
 })
