@@ -3,6 +3,7 @@ import type { AuthenticatedRequest } from '../middleware/auth.ts'
 import { db } from '../db/connection.ts'
 import { habits, entries, habitTags, tags } from '../db/schema.ts'
 import { eq, and, desc, inArray } from 'drizzle-orm'
+import { error } from 'console'
 
 export const createHabit = async (req: AuthenticatedRequest, res: Response) => {
   try {
@@ -112,5 +113,29 @@ export const updateHabit = async (req: AuthenticatedRequest, res: Response) => {
   } catch (e) {
     console.error('Update habit error', e)
     res.status(500).json({ error: 'Failed to update habit' })
+  }
+}
+
+export const deleteHabit = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const { id } = req.params
+
+    const userId = req.user.id
+
+    const [deletedHabit] = await db
+      .delete(habits)
+      .where(and(eq(habits.id, id), eq(habits.userId, userId)))
+      .returning()
+
+    if (!deletedHabit) {
+      return res.status(404).json({ error: 'Habit not found' })
+    }
+
+    res.json({
+      message: 'Habit deleted successfully',
+    })
+  } catch (error) {
+    console.error('Delete habit error:', error)
+    res.status(500).json({ error: 'Failed to delete habit' })
   }
 }
