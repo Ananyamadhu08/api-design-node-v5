@@ -1,17 +1,9 @@
 import { db } from '../../src/db/connection.ts'
-import { users, habits, entries } from '../../src/db/schema.ts'
+import { users, habits, entries, type NewUser } from '../../src/db/schema.ts'
 import { hashPassword } from '../../src/utils/password.ts'
 import { generateToken } from '../../src/utils/jwt.ts'
 
-export async function createTestUser(
-  userData: Partial<{
-    email: string
-    username: string
-    password: string
-    firstName: string
-    lastName: string
-  }> = {}
-) {
+export async function createTestUser(userData: Partial<NewUser> = {}) {
   const defaultData = {
     email: `test-${Date.now()}-${Math.random()}@example.com`,
     username: `testuser-${Date.now()}-${Math.random()}`,
