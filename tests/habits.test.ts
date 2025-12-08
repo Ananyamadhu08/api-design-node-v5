@@ -81,4 +81,22 @@ describe('Habits API', () => {
       expect(response.body.habits.length).toBe(0)
     })
   })
+
+  describe('PUT /api/habits/:id', () => {
+    it('should update a habit', async () => {
+      const { user, token } = await createTestUser()
+      const habit = await createTestHabit(user.id)
+
+      const response = await request(app)
+        .put(`/api/habits/${habit.id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          name: 'Read for 30 minutes',
+          description: 'Extended reading time',
+        })
+
+      expect(response.status).toBe(200)
+      expect(response.body.habit.name).toBe('Read for 30 minutes')
+    })
+  })
 })
