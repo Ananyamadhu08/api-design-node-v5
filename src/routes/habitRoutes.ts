@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { authenticateToken } from '../middleware/auth.ts'
 import {
   createHabit,
+  deleteHabit,
   getUserHabits,
   updateHabit,
 } from '../controllers/habitController.ts'
@@ -30,9 +31,7 @@ router.get('/:id', (req, res) => {
 
 router.post('/', validateBody(createHabitSchema), createHabit)
 
-router.delete('/:id', (req, res) => {
-  res.status(200).json({ message: 'deleted habit' })
-})
+router.delete('/:id', deleteHabit)
 
 router.post('/:id/complete', (req, res) => {
   res.status(201).json({ message: 'completed habit' })
