@@ -7,7 +7,7 @@ import {
   updateHabit,
 } from '../controllers/habitController.ts'
 import { z } from 'zod'
-import { validateBody } from '../middleware/validation.ts'
+import { validateBody, validateParams } from '../middleware/validation.ts'
 
 const createHabitSchema = z.object({
   name: z.string(),
@@ -27,7 +27,7 @@ router.use(authenticateToken)
 
 router.get('/', getUserHabits)
 
-router.patch('/:id', updateHabit)
+router.patch('/:id', validateParams(uuidSchema), updateHabit)
 
 router.get('/:id', (req, res) => {
   res.status(200).json({ message: 'got one habit' })
