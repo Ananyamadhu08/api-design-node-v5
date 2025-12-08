@@ -2,8 +2,7 @@ import type { Response } from 'express'
 import type { AuthenticatedRequest } from '../middleware/auth.ts'
 import { db } from '../db/connection.ts'
 import { habits, entries, habitTags, tags } from '../db/schema.ts'
-import { eq, and, desc, inArray } from 'drizzle-orm'
-import { error } from 'console'
+import { eq, and, desc } from 'drizzle-orm'
 
 export const createHabit = async (req: AuthenticatedRequest, res: Response) => {
   try {
