@@ -1,5 +1,5 @@
 import { db } from '../../src/db/connection.ts'
-import { users, habits, entries } from '../../src/db/schema.ts'
+import { users, habits, entries, tags, habitTags } from '../../src/db/schema.ts'
 import { sql } from 'drizzle-orm'
 import { execSync } from 'child_process'
 
@@ -11,6 +11,8 @@ export default async function setup() {
     await db.execute(sql`DROP TABLE IF EXISTS ${entries} CASCADE`)
     await db.execute(sql`DROP TABLE IF EXISTS ${habits} CASCADE`)
     await db.execute(sql`DROP TABLE IF EXISTS ${users} CASCADE`)
+    await db.execute(sql`DROP TABLE IF EXISTS ${tags} CASCADE`)
+    await db.execute(sql`DROP TABLE IF EXISTS ${habitTags} CASCADE`)
 
     // Use drizzle-kit CLI to push schema to database
     console.log('🚀 Pushing schema using drizzle-kit...')
@@ -36,6 +38,8 @@ export default async function setup() {
       await db.execute(sql`DROP TABLE IF EXISTS ${entries} CASCADE`)
       await db.execute(sql`DROP TABLE IF EXISTS ${habits} CASCADE`)
       await db.execute(sql`DROP TABLE IF EXISTS ${users} CASCADE`)
+      await db.execute(sql`DROP TABLE IF EXISTS ${tags} CASCADE`)
+      await db.execute(sql`DROP TABLE IF EXISTS ${habitTags} CASCADE`)
 
       console.log('✅ Test database teardown complete')
       process.exit(0)
